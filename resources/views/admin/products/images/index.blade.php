@@ -12,7 +12,7 @@
                 <div class="section text-center">
                     <h2 class="title">Imágenes del producto "{{ $product->name }}"</h2>
 
-                    <form method="post" action="">
+                    <form method="post" action="" enctype="multipart/form-data">
                         @csrf
                         <input type="file" name="photo" required>
                         <button type="submit" class="btn btn-primary">Subir nueva imágen</button>
@@ -24,8 +24,13 @@
                         <div class="col-md-4">
                             <div class="panel panel-default">
                                 <div class="panel-body">
-                                    <img src="{{ $image->image }}" alt="">
-                                    <button type="submit" class="btn btn-danger">Eliminar imágen</button>
+                                    <img src="{{ $image->url }}" width="250" alt="">
+                                    <form method="post" action="">
+                                        @csrf
+                                        @method("DELETE")
+                                        <input type="hidden" name="image_id" value="{{ $image->id }}">
+                                        <button type="submit" class="btn btn-danger">Eliminar imágen</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
