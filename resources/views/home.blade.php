@@ -13,9 +13,9 @@
                 <div class="section">
                     <h2 class="title text-center">Dashboard</h2>
 
-                    @if (session('status'))
+                    @if (session('notification'))
                         <div class="alert alert-success">
-                            {{ session('status') }}
+                            {{ session('notification') }}
                         </div>
                     @endif
 
@@ -33,7 +33,8 @@
                             </a>
                         </li>
                     </ul>
-                    
+                    <hr>
+                    <p>Tu carro de compras presenta {{ auth()->user()->cart->details->count() }} productos.</p>
                    <table class="table">
                         <thead>
                             <tr>
@@ -58,9 +59,10 @@
                                 <td>{{ $detail->quantity }}</td>
                                 <td>$ {{ $detail->quantity * $detail->product->price }}</td>
                                 <td class="td-actions text-right">
-                                    <form method="post" action="{{ url('/admin/products/'.$detail->product->id) }}">
+                                    <form method="post" action="{{ url('/cart') }}">
                                         @csrf
                                         @method("DELETE")
+                                        <input type="hidden" name="cart_detail_id" value="{{ $detail->id }}">
                                          <a href="{{ url('/products/'.$detail->product->id) }}" target="_blank" rel="tooltip" title="Ver producto" class="btn btn-info btn-simple btn-xs">
                                             <i class="fa fa-info"></i>
                                         </a>
